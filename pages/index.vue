@@ -1,7 +1,17 @@
 <template>
   <div>
-    <video class="screen" @loadeddata="onLoaded" :srcObject.prop="stream"></video>
-    <button @click="clickButton">ここを押す</button>
+    <div class="flex justify-center mt-16">
+      <div v-if="this.stream === undefined" class="bg-gray-200 screen">
+        Waiting...
+      </div>
+      <div v-else>
+        <video class="screen" @loadeddata="onLoaded" :srcObject.prop="stream"></video>
+      </div>
+    </div>
+    <div class="flex justify-center mt-16">
+      <button v-if="this.stream === undefined" @click="recordStart"><img src="~/assets/svg/rec.svg" class="h-16 w-13"></button>
+      <button v-else @click="recordStop"><img src="~/assets/svg/stop.svg" class="h-16 w-13"></button>
+    </div>
   </div>
 </template>
 
@@ -9,17 +19,40 @@
 export default {
   data () {
     return {
-      stream: undefined
+      stream: undefined,
+      recorder: undefined,
+      recordedBlobs: [],
+      download_url: undefined,
     }
   },
   created () {
   },
   methods: {
-    async clickButton () {
+    async recordStart () {
       this.stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
-        audio: false
+        audio: false,
       })
+      this.recorder = new MediaRecorder(this.stream, {
+        mimeType : 'video/webm'
+      })
+      this.recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          this.recordedBlobs.push(event.data);
+        }
+      }
+      this.recorder.start(1000)
+    },
+    recordStop () {
+      this.recorder.stop()
+      const blob = new Blob(this.recordedBlobs, { type: "video/webm" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "rec.webm";
+      document.body.appendChild(a);
+      a.click();
     },
     onLoaded (event) {
       console.log(event)
@@ -31,7 +64,7 @@ export default {
 
 <style scoped>
 .screen {
-  width: 600px;
-  height: 300px;
+  width: calc(100vw * 0.5);
+  height: calc(100vw * 0.3);
 }
 </style>
