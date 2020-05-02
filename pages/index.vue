@@ -32,16 +32,19 @@ export default {
       this.stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false,
-      })
-      this.recorder = new MediaRecorder(this.stream, {
-        mimeType : 'video/webm'
-      })
-      this.recorder.ondataavailable = (event) => {
-        if (event.data && event.data.size > 0) {
-          this.recordedBlobs.push(event.data);
+      }).then(() => {
+        this.recorder = new MediaRecorder(this.stream, {
+          mimeType : 'video/webm'
+        })
+        this.recorder.ondataavailable = (event) => {
+          if (event.data && event.data.size > 0) {
+            this.recordedBlobs.push(event.data);
+          }
         }
-      }
-      this.recorder.start(1000)
+        this.recorder.start(1000)
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     recordStop () {
       this.recorder.stop()
