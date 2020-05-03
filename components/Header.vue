@@ -1,5 +1,5 @@
 <template functional>
-  <header class="">
+  <header class="ml-20">
     <img src="~/assets/svg/fukuro.svg" class="logo">
   </header>
 </template>
