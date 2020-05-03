@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-grey">
     <nuxt />
   </div>
 </template>
@@ -15,6 +15,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F6F6F4;
 }
 
 *,
