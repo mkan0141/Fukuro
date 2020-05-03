@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "nuxt": "^2.0.0",
     "vue-sweetalert2": "^3.0.3"
   },
