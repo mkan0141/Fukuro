@@ -2,7 +2,7 @@
   <div class="max-w-md">
     <Header />
     <div class="w-screen h-screen">
-      <div class="flex justify-center mt-16">
+      <div class="flex justify-center mt-12">
         <div v-if="!this.stream" class="bg-white screen">
         </div>
         <div v-else>
@@ -15,19 +15,19 @@
         <button v-else @click="recordStop" class="mt-5"><img src="~/assets/svg/stop.svg" class="h-16 w-13"></button>
       </div>
     </div>
-    <div class="w-screen h-screen" id="result">
-      <div class="flex justify-center pt-10">
-          <video class="screen" :src="this.download_url" type="video/webm" controls></video>
+    <div class="w-screen h-screen flex flex-col justify-center items-center" id="result">
+        <div class="flex justify-center">
+            <video class="screen" :src="this.download_url" type="video/webm" controls></video>
+        </div>
+        <div class="flex items-center justify-center mt-10">
+          <a :href="this.download_url" download="rec.webm">
+            <button class="bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+              <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+              <span>Download</span>
+            </button>
+          </a>
+        </div>
       </div>
-      <div class="flex justify-center mt-10">
-        <a :href="this.download_url" download="rec.webm">
-          <button class="bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-            <span>Download</span>
-          </button>
-        </a>
-      </div>
-    </div>
   </div>
 </template>
 
