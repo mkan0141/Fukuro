@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="flex justify-center mt-16">
-      <div v-if="this.stream === undefined" class="bg-gray-200 screen">
-        Waiting...
+      <div v-if="this.stream===undefined" class="bg-white screen">
       </div>
       <div v-else>
         <video class="screen" @loadeddata="onLoaded" :srcObject.prop="stream"></video>
@@ -11,6 +10,12 @@
     <div class="flex justify-center mt-16">
       <button v-if="this.stream === undefined" @click="recordStart"><img src="~/assets/svg/rec.svg" class="h-16 w-13"></button>
       <button v-else @click="recordStop"><img src="~/assets/svg/stop.svg" class="h-16 w-13"></button>
+    </div>
+    <div class="flex justify-center mt-16">
+        <video class="screen" :src="this.download_url" type="video/webm" controls></video>
+    </div>
+    <div class="flex justify-center mt-8">
+      <a :href="this.download_url" download="rec.webm">保存</a>
     </div>
   </div>
 </template>
@@ -32,30 +37,26 @@ export default {
       this.stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: false,
-      }).then(() => {
-        this.recorder = new MediaRecorder(this.stream, {
-          mimeType : 'video/webm'
-        })
-        this.recorder.ondataavailable = (event) => {
-          if (event.data && event.data.size > 0) {
-            this.recordedBlobs.push(event.data);
-          }
-        }
-        this.recorder.start(1000)
-      }).catch((error) => {
-        console.log(error)
+      }).catch(()=>{ console.log(this.stream) })
+      if (!this.stream) {
+        return 
+      }
+      this.recorder = new MediaRecorder(this.stream, {
+        mimeType : 'video/webm'
       })
+      this.recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          this.recordedBlobs.push(event.data);
+        }
+      }
+      this.recorder.start(1000)
     },
     recordStop () {
       this.recorder.stop()
       const blob = new Blob(this.recordedBlobs, { type: "video/webm" });
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      a.download = "rec.webm";
-      document.body.appendChild(a);
-      a.click();
+      this.download_url = url
+      console.log(url)
     },
     onLoaded (event) {
       console.log(event)
