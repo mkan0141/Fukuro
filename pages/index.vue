@@ -45,7 +45,6 @@ export default {
       if (!this.stream) {
         return 
       }
-      console.log(this.stream)
       this.recorder = new MediaRecorder(this.stream, {
         mimeType : 'video/webm'
       })
@@ -57,14 +56,17 @@ export default {
       this.recorder.start(1000)
     },
     recordStop () {
-      this.recorder.stop()
+      if (this.recorder.state === "recording") {
+        this.recorder.stop()
+      }
       const blob = new Blob(this.recordedBlobs, { type: "video/webm" });
       const url = window.URL.createObjectURL(blob);
       this.download_url = url
       this.$router.push('#result')
+      this.stream   = undefined
+      this.recorder = undefined 
     },
     onLoaded (event) {
-      console.log(event)
       event.target.play()
     }
   }
