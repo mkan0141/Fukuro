@@ -12,7 +12,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vue-sweetalert2": "^3.0.3"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^1.0.0",

@@ -40,6 +40,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    'vue-sweetalert2/nuxt'
   ],
   /*
   ** Build configuration
