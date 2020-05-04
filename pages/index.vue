@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header />
     <div class="w-screen h-screen">
       <div class="flex justify-center mt-8">
         <div v-if="!this.stream" class="bg-white screen">
@@ -32,21 +31,11 @@
         </button>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Header from '~/components/Header'
-import Footer from '~/components/Footer'
-import Alert  from '~/components/Alert'
-
 export default {
-  components: {
-    Header,
-    Footer,
-    Alert
-  },
   data () {
     return {
       stream: undefined,
