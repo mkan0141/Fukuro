@@ -15,17 +15,21 @@
         <button v-else @click="recordStop" class="mt-5"><img src="~/assets/svg/stop.svg" class="h-16 w-13"></button>
       </div>
     </div>
-    <div class="w-screen h-screen flex flex-col justify-center items-center" id="result">
+    <div v-if="download_url" class="w-screen h-screen flex flex-col justify-center items-center" id="result">
       <div class="flex justify-center">
           <video class="screen" :src="this.download_url" type="video/webm" controls></video>
       </div>
-      <div class="flex items-center justify-center mt-10">
+      <div class="flex flex-col items-center justify-center mt-10">
         <a :href="this.download_url" download="rec.webm">
           <button class="bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 border border-gray-800 rounded inline-flex items-center">
             <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-            <span>Download</span>
+            <span>ダウンロード</span>
           </button>
         </a>
+        <button class="bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 mt-5 border border-gray-800 rounded inline-flex items-center" @click="toTopPage">
+          <img class="h-20p w-20p pr-1" src="~/assets/svg/camera.svg">
+          <span>もう一度録画</span>
+        </button>
       </div>
     </div>
     <Footer />
@@ -99,6 +103,13 @@ export default {
     },
     onLoaded (event) {
       event.target.play()
+    },
+    toTopPage () {
+      this.initializedState()
+      this.$router.push('/')
+      setTimeout(() => {
+        this.download_url = ""
+      }, 400)
     }
   }
 }
@@ -108,6 +119,11 @@ export default {
 .screen {
   width: calc(100vw * 0.5);
   height: calc(100vw * 0.3);
+}
+
+.h-20p {
+  height: 25px;
+  width: 25px;
 }
 
 .toggle-dot {
