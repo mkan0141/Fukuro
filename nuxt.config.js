@@ -1,4 +1,3 @@
-
 export default {
   mode: 'spa',
   /*
@@ -23,12 +22,14 @@ export default {
   ** Global CSS
   */
   css: [
+    { src: '~assets/css/style.css'},
     '@fortawesome/fontawesome-free/css/all.css',
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~plugins/ga.js', mode: 'client' }
   ],
   /*
   ** Nuxt.js dev-modules
