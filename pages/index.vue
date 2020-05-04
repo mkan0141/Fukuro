@@ -54,7 +54,6 @@ export default {
       this.recordedBlobs = []
     },
     async selectScreen () {
-      console.log(this.audio)
       this.stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: this.audio,
@@ -77,10 +76,8 @@ export default {
         }
       }
       this.recorder.start(1000)
-      console.log(this.recorder)
     },
     recordStop () {
-      console.log(this.recorder)
       if (this.recorder.state === "recording") {
         this.recorder.stop()
       }
