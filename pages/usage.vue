@@ -25,8 +25,8 @@
     </div>
     <div class="flex flex-col items-center mt-20 mb-10">
       <span id="browser" class="text-3xl font-bold">対応ブラウザ</span>
-      <span class="text-xl mt-5">FireFox, Microsoft Edge</span>
-      <span class="text-xl">Opera, Safari</span>
+      <span class="text-xl mt-5">Chrome, FireFox, Safari</span>
+      <span class="text-xl">Opera, Microsoft Edge</span>
       <span class="mt-5">&#x26a0;スマートフォンからはご利用できません。</span>
       <span>&#x26a0;ブラウザのバージョンが低い場合、動作しない場合があります。</span>
     </div>
