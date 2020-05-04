@@ -9,8 +9,8 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
-      { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
-      { hid: 'og:type', property: 'og:type', content: '' },
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+      { hid: 'og:type', property: 'og:type', content: 'Website' },
         {
           hid: 'og:title',
           property: 'og:title',
