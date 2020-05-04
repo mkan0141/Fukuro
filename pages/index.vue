@@ -35,11 +35,13 @@
 <script>
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
+import Alert  from '~/components/Alert'
 
 export default {
   components: {
     Header,
-    Footer
+    Footer,
+    Alert
   },
   data () {
     return {
