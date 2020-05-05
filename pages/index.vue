@@ -85,7 +85,12 @@ export default {
         this.audioStream = await navigator.mediaDevices.getUserMedia({
           video: false,
           audio: true,
+        }).catch((error) => { 
+          this.$swal('マイクへのアクセスを許可して下さい')
+          return
         });
+        console.log(this.audioStream)
+        if (!this.audioStream) return 
         this.combinedStream = new MediaStream([...this.videoStream.getTracks(), ...this.audioStream.getTracks()])
       } else {
         this.combinedStream = this.videoStream
