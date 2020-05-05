@@ -2,14 +2,24 @@
   <div>
     <div class="w-screen h-screen">
       <div class="flex justify-center mt-8">
-        <div v-if="!this.stream" class="bg-white screen">
+        <div v-if="!this.videoStream" class="bg-white screen">
         </div>
         <div v-else>
-          <video class="screen border border-gray-800" @loadeddata="onLoaded" :srcObject.prop="stream"></video>
+          <video class="screen border border-gray-800" @loadeddata="onLoaded" :srcObject.prop="videoStream"></video>
         </div>
       </div>
       <div class="flex flex-col items-center mt-10">
         <button class="bg-white hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 border border-gray-800 rounded inline-flex items-center" @click="selectScreen">録画する画面を選択</button>
+        <div class="flex mt-5">
+          <label for="sound-toggle" class="flex items-center cursor-pointer">
+            <div class="relative">
+              <input id="sound-toggle" type="checkbox" class="hidden" v-model="audio">
+              <div class="h-4 w-12 bg-gray-400 rounded-full shadow-inner"></div>
+              <div class="toggle-dot absolute h-6 w-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
+            </div>
+          </label>
+          <span class="ml-5 text-gray-800 font-bold">音声を入れる</span>
+        </div>
         <button v-if="!this.recorder" class="mt-5" @click="recordStart"><img src="~/assets/svg/rec.svg" class="h-16 w-13"></button>
         <button v-else @click="recordStop" class="mt-5"><img src="~/assets/svg/stop.svg" class="h-16 w-13"></button>
       </div>
@@ -38,7 +48,9 @@
 export default {
   data () {
     return {
-      stream: undefined,
+      videoStream: undefined,
+      audioStream: undefined,
+      combinedStream: undefined,
       recorder: undefined,
       recordedBlobs: [],
       download_url: undefined,
@@ -49,25 +61,36 @@ export default {
   },
   methods: {
     initializedState () {
-      this.stream = undefined
+      this.videoStream = undefined
+      this.audioStream = undefined
+      this.combinedStream = undefined
       this.recorder = undefined
       this.recordedBlobs = []
     },
     async selectScreen () {
-      this.stream = await navigator.mediaDevices.getDisplayMedia({
+      this.videoStream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: this.audio,
-      }).catch(()=>{ console.log(this.stream) })
-      if (!this.stream) {
+      }).catch(()=>{ console.log(this.videoStream) })
+      if (!this.videoStream) {
         return 
       }
     },
     async recordStart () {
-      if (!this.stream) {
+      if (!this.videoStream) {
         this.$swal('録画画面を選択して下さい');
         return
       }
-      this.recorder = new MediaRecorder(this.stream, {
+      if (this.audio) {
+        this.audioStream = await navigator.mediaDevices.getUserMedia({
+          video: false,
+          audio: true,
+        });
+        this.combinedStream = new MediaStream([...this.videoStream.getTracks(), ...this.audioStream.getTracks()])
+      } else {
+        this.combinedStream = this.videoStream
+      }
+      this.recorder = new MediaRecorder(this.combinedStream, {
         mimeType : 'video/webm'
       })
       this.recorder.ondataavailable = (event) => {
