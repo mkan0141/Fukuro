@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "vue-sweetalert2": "^3.0.3"
   },
   "devDependencies": {
