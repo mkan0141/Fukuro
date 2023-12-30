@@ -1,26 +1,18 @@
 {
-  "name": "Fukuro",
-  "version": "1.0.0",
-  "description": "",
-  "author": "mkan0141",
-  "private": true,
+  "name": "fukuro",
+  "version": "2.0.0",
+  "private": false,
+  "type": "module",
   "scripts": {
-    "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "test": "jest"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
-    "nuxt": "^2.0.0",
-    "vue-sweetalert2": "^3.0.3"
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^1.0.0",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
-    "vue-jest": "^4.0.0-0"
+    "nuxt": "^3.9.0",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5"
   }
 }
